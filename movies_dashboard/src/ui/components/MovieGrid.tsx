@@ -1,11 +1,17 @@
-var MovieGrid = (props) => {
-  let movies = props.movies;
-  let movieRows = movies.map((movie) => (
-    <tr>
+import React from 'react';
+import {  useSelector } from 'react-redux';
+import {  State } from "../state";
+
+export const MovieGrid: React.FC<any> = () => {
+  const moviesState = useSelector((state: State) => state.movies)
+  const movies = moviesState.movies
+
+  const movieRows = movies.map((movie) => (
+    <tr key={movie.id}>
       <td>{movie.name}</td>
       <td>{movie.category}</td>
       <td>{movie.description}</td>
-      <td>{movie.created}</td>
+      <td>{'movie.created'}</td>
       <td>
         <div className="btn-group btn-group-sm" role="group">
           <button className="btn btn-outline-info" type="button">
@@ -20,7 +26,7 @@ var MovieGrid = (props) => {
   ));
   return (
     <section>
-      <h2>Todas las peliculas</h2>
+      <h2>Peliculas</h2>
       <div className="table-responsive">
         <table className="table">
           <thead>
@@ -28,7 +34,7 @@ var MovieGrid = (props) => {
               <th>Nombre</th>
               <th>Categoría</th>
               <th>Descripción</th>
-              <th>Creado</th>
+              <th>Fecha creación</th>
               <th />
             </tr>
           </thead>
@@ -38,4 +44,3 @@ var MovieGrid = (props) => {
     </section>
   );
 };
-export default MovieGrid;

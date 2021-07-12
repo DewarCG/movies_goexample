@@ -1,12 +1,21 @@
-/* eslint-disable import/no-anonymous-default-export */
-import React, { useState } from "react";
-import Movie from "../../domain/models/movie";
+import React, { useState } from 'react';
+import Movie from '../../domain/models/movie';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../state";
 
-var MovieCreator = (props) => {
-  // let movieRequest = new Movie()
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
-  const [description, setDescription] = useState("");
+
+export const MoviesCreator: React.FC<any> = (args) => {
+  const [name, setName] = useState('');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const dispatch = useDispatch()
+  const { createMovieAsync } = bindActionCreators(actionCreators, dispatch)
+
+  const saveMovieFn = () => {
+    const movie = { name, category, description } as Movie;
+    createMovieAsync(movie)
+  };
 
   return (
     <section className="contact-clean">
@@ -46,7 +55,7 @@ var MovieCreator = (props) => {
           <button
             className="btn btn-primary"
             type="button"
-            onClick={props.onSave}
+            onClick={saveMovieFn}
           >
             registrar
           </button>
@@ -55,5 +64,3 @@ var MovieCreator = (props) => {
     </section>
   );
 };
-
-export default MovieCreator;
